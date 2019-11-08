@@ -24,23 +24,13 @@ iris_with_missing = iris %>%
 
 testing code
 ```{r}
-vector_1 <- as.vector(iris_with_missing[[1]])
-vector_5 <- as.vector(iris_with_missing[[5]])
-
 replace_iris_missing = function(x) {
   y = is.numeric(x) & is.na(x)
   z = is.character(x) & is.na(x)
   ifelse(y, round(mean(x, na.rm = TRUE),1), ifelse(z, "virginica", x))
 }
-  
 
-replace_iris_missing(vector_1)
-replace_iris_missing(vector_5)
-  
-
-
-is.numeric(vector_1) & is.na(vector_1)
-is.character(vector_5) & is.na(vector_5)
+map(.x = as.list(iris_with_missing), ~replace_iris_missing(.x))
 
 ```
 
