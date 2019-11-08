@@ -1,0 +1,46 @@
+---
+title: "P8105 Homework 5"
+author: "Xinyu Yang"
+date: "11/8/2019"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem 1
+
+```{r}
+#introducing missing value:
+library(tidyverse)
+
+set.seed(10)
+
+iris_with_missing = iris %>% 
+  map_df(~replace(.x, sample(1:150, 20), NA)) %>%
+  mutate(Species = as.character(Species))
+```
+
+testing code
+```{r}
+vector_1 <- as.vector(iris_with_missing[[1]])
+vector_5 <- as.vector(iris_with_missing[[5]])
+
+replace_iris_missing = function(x) {
+  y = is.numeric(x) & is.na(x)
+  z = is.character(x) & is.na(x)
+  ifelse(y, round(mean(x, na.rm = TRUE),1), ifelse(z, "virginica", x))
+}
+  
+
+replace_iris_missing(vector_1)
+replace_iris_missing(vector_5)
+  
+
+
+is.numeric(vector_1) & is.na(vector_1)
+is.character(vector_5) & is.na(vector_5)
+
+```
+
