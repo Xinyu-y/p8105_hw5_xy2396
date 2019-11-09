@@ -108,7 +108,11 @@ sim_results %>%
   geom_line() +
   scale_x_continuous("True Beta", breaks = c(1:6)) 
 
+```
+   
+From the plot of proportion of reject the null and true beta, we can see...
 
+```{r}
 #plot2
 df_1 <-
   sim_results %>% 
@@ -128,7 +132,9 @@ df_1 %>%
   geom_text(vjust = 0, nudge_y = 0.8, aes(color = estimate)) +
   scale_x_continuous("True Beta", breaks = c(1:6))
   
+```
+   
+From the plot above, we can see
   
 
-```
 
