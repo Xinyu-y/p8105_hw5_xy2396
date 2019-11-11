@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Problem 1
 
-```{r}
+```{r message=FALSE}
 #introducing missing value:
 library(tidyverse)
 
@@ -43,7 +43,7 @@ read_in = function(x) {
 }
 ```
 
-```{r message=FALSE}
+```{r message=FALSE, warning=FALSE}
 setwd("./data")
 study <-
   file_names %>% 
@@ -60,14 +60,15 @@ study %>%
   select(-a) %>% 
   ggplot(aes(x = week, y = obs_value, group = id, color = arm)) +
   geom_path() + 
-  labs(title = "spaghetti plot of observations on each subject over time") + 
+  labs(title = "Observations on each subject over time by treatment arm") + 
   viridis::scale_color_viridis(
     discrete = TRUE) + 
+  theme_minimal() +
   theme(legend.position = "right")
 ```
-
-From the plot we can see .....
-(comment the plot)
+   
+From the plot we can see that over time, the observed value of subjects in experiment group were generally increasing while the observed value of subjects in control group remained relatively unchanged or decreased a little.
+   
 
 ## Problem 3
 ```{r}
@@ -106,12 +107,14 @@ sim_results %>%
   ggplot(aes(x = beta_true, y = p_reject)) +
   geom_point() +
   geom_line() +
-  scale_x_continuous("True Beta", breaks = c(1:6)) 
+  scale_x_continuous("True Beta", breaks = c(1:6)) +
+  theme_minimal()
 
 ```
    
-From the plot of proportion of reject the null and true beta, we can see...
-
+From the plot of proportion of reject the null and true beta, we can see that the power increases as the effect size increases (from beta = 1 to beta = 6)
+   
+   
 ```{r}
 #plot2
 df_1 <-
@@ -130,11 +133,13 @@ df_1 %>%
   ggplot(aes(x = beta_true, y = value, label = round(value,1))) +
   geom_line(aes(color = estimate)) +
   geom_text(vjust = 0, nudge_y = 0.8, aes(color = estimate)) +
-  scale_x_continuous("True Beta", breaks = c(1:6))
+  scale_x_continuous("True Beta", breaks = c(1:6)) +
+  theme_minimal()
   
 ```
    
-From the plot above, we can see
-  
-
+From the plot above, we can see that the sample average of estimated beta1 across tests among those rejected the null are very different from the true value of beta1.
+   
+It is because in this simulation, the sample sizes are very small (n = 30) while the variance is large (var = 50), which results in a large standard error and requires a relatively large effect size to reject the null hypothesis. Thus, the betas that reject the null are those with large effect size (i.e. large estimated value) instead of those close to the true beta (which are relativley small).
+   
 
